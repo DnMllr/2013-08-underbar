@@ -16,6 +16,7 @@ var _ = { };
   // Return an array of the first n elements of an array. If n is undefined,
   // return just the first element.
   _.first = function(array, n) {
+    if (isNaN(n)) {return array[0]} else {return array.slice(0, n)};
   };
 
   // Like first, but for the last elements. If n is undefined, return just the

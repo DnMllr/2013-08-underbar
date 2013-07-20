@@ -16,22 +16,70 @@ var _ = { };
   // Return an array of the first n elements of an array. If n is undefined,
   // return just the first element.
   _.first = function(array, n) {
-    if (isNaN(n)) {return array[0]} else {return array.slice(0, n)};
+    if (isNaN(n)) {
+    	return array[0];
+    } else {
+    	return array.slice(0, n);
+    };
   };
 
   // Like first, but for the last elements. If n is undefined, return just the
   // last element.
   _.last = function(array, n) {
+    var end = array.length;
+    if (isNaN(n)) {
+    	return array[end-1];
+    } else if (n === 0) {
+    	return [];
+	} else {
+    	return array.slice(-n);
+    };
   };
 
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
   _.each = function(collection, iterator) {
+  	var type = Object.prototype.toString;
+  	var running = new Object;
+  	switch (type.call(collection)) {
+  		case "[object Array]":
+  			for (var i = 0 ; i < collection.length ; i++) {
+  				if (iterator.length === 3) {
+  					iterator(collection[i], i, collection);
+  				} else if (iterator.length === 2) {
+  					iterator(collection[i], i);
+  				} else {
+  					iterator(collection[i]);
+  				};
+  			}
+  			break
+  		case "[object Object]":
+  			for (var prop in collection) {
+  				if (iterator.length === 3) {
+  					iterator(collection[prop], prop, collection);
+  				} else if (iterator.length === 2) {
+  					iterator(collection[prop], prop);
+  				} else {
+  					iterator(collection[prop]);
+  				};
+  			}
+  			break
+  		default:
+  			console.log("Collection is neither an Array nor an Object.");
+  	}
+
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
   _.indexOf = function(array, target){
+  	var ind = -1;
+  	_.each(array, function(value, index) {
+  		if (value === target && ind === -1) {
+  			ind = index;
+  		}
+  	});
+  	return ind;
     // TIP: Here's an example of a function that needs to iterate, which we've
     // implemented for you. Instead of using a standard `for` loop, though,
     // it uses the iteration helper `each`, which you will need to write.

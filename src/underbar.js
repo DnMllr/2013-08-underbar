@@ -98,6 +98,21 @@ var _ = { };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, iterator) {
+  	var arr = _.filter(collection, iterator);
+  	var arr2 = [];
+  	var flag = false;
+  	for (var i = 0 ; i < collection.length; i++) {
+  		for (var j = 0 ; j < arr.length ; j++) {
+  			if (collection[i] === arr[j]) {
+  				flag = true;
+  			}
+  		}
+  		if (!flag) {
+  			arr2.push(collection[i]);
+  		}
+  		flag = false;
+  	}
+  	return arr2;
     // TIP: see if you can re-use _.select() here, without simply
     // copying code in and modifying it
   };

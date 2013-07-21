@@ -119,6 +119,15 @@ var _ = { };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+  	var locations = {};
+  	var arr = [];
+  	for (var i = 0 ; i < array.length ; i++ ) {
+  		locations[_.indexOf(array, array[i])] = true;
+  	}
+  	for (var i in locations ) {
+  		arr.push(array[i]);
+  	}
+  	return arr;
   };
 
 

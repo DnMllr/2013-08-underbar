@@ -183,6 +183,21 @@ var _ = { };
   //   }, 0); // should be 6
   //
   _.reduce = function(collection, iterator, initialValue) {
+  	if (isNaN(initialValue)) {
+  		var running = iterator(collection[0], collection[1]);
+  		for (var i = 2 ; i < collection.length ; i++) {
+  			var val = collection[i];
+  			running = iterator(running, val);
+  		}
+  	} else {
+  		var running = iterator(initialValue, collection[0]);
+		for (var i = 1 ; i < collection.length ; i++) {
+			var val = collection[i];
+			running = iterator(running, val);
+  		}
+  	}
+
+  	return running;
   };
 
   // Determine if the array or object contains a given value (using `===`).

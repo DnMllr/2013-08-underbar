@@ -122,10 +122,10 @@ var _ = { };
   	var locations = {};
   	var arr = [];
   	for (var i = 0 ; i < array.length ; i++ ) {
-  		locations[_.indexOf(array, array[i])] = true;
+  		locations[array[i]] = true;
   	}
   	for (var i in locations ) {
-  		arr.push(array[i]);
+  		arr.push(i);
   	}
   	return arr;
   };
@@ -162,7 +162,7 @@ var _ = { };
 
   // Calls the method named by methodName on each value in the list.
   _.invoke = function(list, methodName, args) {
-  	return list[methodName](args);
+  	});
   };
 
   // Reduces an array or object to a single value by repetitively calling

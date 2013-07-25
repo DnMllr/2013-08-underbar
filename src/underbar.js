@@ -39,35 +39,15 @@ var _ = { };
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
   _.each = function(collection, iterator) {
-  	var type = Object.prototype.toString;
-  	var running = new Object;
-  	switch (type.call(collection)) {
-  		case "[object Array]":
-  			for (var i = 0 ; i < collection.length ; i++) {
-  				if (iterator.length === 3) {
-  					iterator(collection[i], i, collection);
-  				} else if (iterator.length === 2) {
-  					iterator(collection[i], i);
-  				} else {
-  					iterator(collection[i]);
-  				};
-  			}
-  			break
-  		case "[object Object]":
-  			for (var prop in collection) {
-  				if (iterator.length === 3) {
-  					iterator(collection[prop], prop, collection);
-  				} else if (iterator.length === 2) {
-  					iterator(collection[prop], prop);
-  				} else {
-  					iterator(collection[prop]);
-  				};
-  			}
-  			break
-  		default:
-  			console.log("Collection is neither an Array nor an Object.");
-  	}
-
+  	if (Object.prototype.toString.call(collection) === "[object Array]") {
+  		for (var i = 0 ; i < collection.length ; i++) {
+  			iterator(collection[i], i, collection)
+  		};
+  	} else {
+  		for (var prop in collection) {
+  			iterator(collection[prop], prop, collection)
+  		};
+  	};
   };
 
   // Returns the index at which value can be found in the array, or -1 if value

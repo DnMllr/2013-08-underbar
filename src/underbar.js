@@ -156,14 +156,13 @@ var _ = { };
   //   }, 0); // should be 6
   //
   _.reduce = function(collection, iterator, initialValue) {
-  	var start = 0;
-  	if (initialValue === undefined) {
-  		initialValue = collection[start]
-  		start = 1
-  	};
-  	for (var i = start ; i < collection.length ; i++) {
-  		initialValue = iterator(initialValue, collection[i]);
-  	}
+  	_.each(collection, function(value) {
+  		if (initialValue === undefined) {
+  			initialValue = value;
+  		} else {
+  			initialValue = iterator(initialValue, value);
+  		}
+  	});
   	return initialValue
   };
 
@@ -172,10 +171,7 @@ var _ = { };
     // TIP: Many iteration problems can be most easily expressed in
     // terms of reduce(). Here's a freebie to demonstrate!
     return _.reduce(collection, function(wasFound, item) {
-      if(wasFound) {
-        return true;
-      }
-      return item === target;
+      return wasFound || item === target;
     }, false);
   };
 
@@ -183,6 +179,12 @@ var _ = { };
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    if (collection.length === 0) {
+    	return true
+    };
+    return _.reduce(collection, function(isTrue, item) {
+    	return isTrue && iterator(item);
+    }, true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is

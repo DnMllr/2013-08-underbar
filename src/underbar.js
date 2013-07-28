@@ -280,6 +280,14 @@ var _ = { };
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+  	var knownargs = {};
+  	return function(arg) {
+  		if (_.contains(knownargs, arg)) {
+  			return knownargs[arg];
+  		} else {
+  			return knownargs[arg] = func(arg);
+  		}
+  	}
   };
 
   // Delays a function for the given number of milliseconds, and then calls
